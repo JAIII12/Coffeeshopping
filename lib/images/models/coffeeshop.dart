@@ -7,24 +7,24 @@ final List<Coffee> _shop = [
   Coffee(
     name: 'Long Black',
     price: "3.00",
-    imagePath: 'assets/images/black.png',),
+    imagePath: 'lib/images/black.png',),
   
   Coffee(
     name: 'Espresso',
     price: "3.5",
-    imagePath: 'assets/images/espresso.png',
+    imagePath: 'lib/images/espresso.png',
     
   ),
   Coffee(
     name: 'Latte',
     price: "4.50",
-    imagePath: 'assets/images/latte.png',
+    imagePath: 'lib/images/latte.png',
     
   ),
   Coffee(
     name: 'Iced Coffee',
     price: '4.4',
-    imagePath: 'assets/images/icedcoffee.png',
+    imagePath: 'lib/images/icedcoffee.png',
     
   ),
 ];
@@ -40,12 +40,14 @@ List<Coffee> get usercart => _usercart;
 
 // add item to cart
 void addToCart(Coffee coffee) {
-  _usercart.add(coffee); 
+  _usercart.add(coffee);
+  notifyListeners(); 
 }
 
 //remove item from cart
 void removeFromCart(Coffee coffee) {
   _usercart.remove(coffee);
+  notifyListeners();
 
 }
 }
