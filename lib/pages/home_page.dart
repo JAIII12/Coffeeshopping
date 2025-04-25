@@ -1,5 +1,7 @@
 import 'package:coffeeshopui/components/my_bottom_navbar.dart';
 import 'package:coffeeshopui/const.dart';
+import 'package:coffeeshopui/pages/cart_page.dart';
+import 'package:coffeeshopui/pages/shop_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,6 +19,15 @@ class _HomePageState extends State<HomePage> {
       _selectedIndex = index;
     });
   }
+
+  //pages
+  final List<Widget> _pages = [
+    //shop page
+    ShopPage(),
+
+    //cart page
+    CartPage(),
+];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +35,8 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: MyBottomNavbar(
         onTabChange: (index) => navigateBottomNavBar(index),
       ),
+      body: _pages[_selectedIndex],
+
     );
   }
 }
