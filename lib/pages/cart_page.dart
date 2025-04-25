@@ -17,6 +17,13 @@ class _CartPageState extends State<CartPage> {
   void removeFromCart(Coffee coffee) {
     Provider.of<Coffeeshop>(context, listen: false).removeFromCart(coffee);
   }
+
+  //pay now button
+  void payNow(){
+    
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Consumer<Coffeeshop>(builder: (context, value, child) =>SafeArea(
@@ -44,7 +51,27 @@ class _CartPageState extends State<CartPage> {
                   icon: Icon(Icons.delete),
                   onPressed: () => removeFromCart(eachCoffee),);
                
-              }))
+              }
+              ),
+              ),
+
+              //pay button
+              GestureDetector(
+                onTap: payNow,
+                child: Container(
+                  padding: EdgeInsets.all(25),
+                  width: double.infinity,
+                   decoration:BoxDecoration(
+                    color: Colors.brown,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Center(
+                    child: Text("Pay Now",
+                    style: TextStyle(color:Colors.white),
+                    ),
+                  ),
+                ),
+              )
               ],
         ),
       ),

@@ -16,7 +16,15 @@ class _ShopPageState extends State<ShopPage> {
   //add to cart
   void addToCart(Coffee coffee) {
     Provider.of<Coffeeshop>(context, listen: false).addToCart(coffee);
-  }
+
+    //let the user know that the item has been added to cart
+    showDialog(
+      context: context, 
+      builder: (context)=>AlertDialog(
+        title: Text('Succesfully added to cart',),
+      )
+      );
+  } 
 
   @override
   Widget build(BuildContext context) {
