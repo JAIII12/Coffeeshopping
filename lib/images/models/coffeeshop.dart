@@ -30,23 +30,23 @@ final List<Coffee> _shop = [
 ];
 
 //user cart
-List<Coffee> _usercart = [];
+List<Coffee> _userCart = [];
 
 // get coffee
 List<Coffee> get coffeeshop => _shop;
 
 //get user cart
-List<Coffee> get usercart => _usercart;
+List<Coffee> get userCart => _userCart;
 
 // add item to cart
 void addToCart(Coffee coffee) {
-  _usercart.add(coffee);
+  _userCart.add(coffee);
   notifyListeners(); 
 }
 
 //remove item from cart
 void removeFromCart(Coffee coffee) {
-  _usercart.remove(coffee);
+  _userCart.remove(coffee);
   notifyListeners();
 
 }

@@ -40,10 +40,10 @@ class _CartPageState extends State<CartPage> {
               //list of cart items
               Expanded(
                 child: ListView.builder(
-                  itemCount: value.usercart.length,
+                  itemCount: value.userCart.length,
                   itemBuilder: (context, index){
                 //get individual cart items
-                Coffee eachCoffee = value.usercart[index];
+                Coffee eachCoffee = value.userCart[index];
 
                 //return coffee tile 
                 return CoffeeTile(

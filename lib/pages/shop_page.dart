@@ -13,52 +13,98 @@ class ShopPage extends StatefulWidget {
 
 class _ShopPageState extends State<ShopPage> {
 
-  //add to cart
-  void addToCart(Coffee coffee) {
-    Provider.of<Coffeeshop>(context, listen: false).addToCart(coffee);
+  // Show quantity selection dialog
+  void showQuantityDialog(Coffee coffee) {
+    int quantity = 1;
 
-    //let the user know that the item has been added to cart
     showDialog(
-      context: context, 
-      builder: (context)=>AlertDialog(
-        title: Text('Succesfully added to cart',),
-      )
-      );
-  } 
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) => AlertDialog(
+            title: Text('Select Quantity'),
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.remove),
+                  onPressed: () {
+                    if (quantity > 1) {
+                      setState(() => quantity--);
+                    }
+                  },
+                ),
+                Text(
+                  quantity.toString(),
+                  style: TextStyle(fontSize: 20),
+                ),
+                IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    setState(() => quantity++);
+                  },
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text("Cancel"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  for (int i = 0; i < quantity; i++) {
+                    Provider.of<Coffeeshop>(context, listen: false)
+                        .addToCart(coffee);
+                  }
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content:
+                          Text("Added $quantity ${coffee.name} to cart"),
+                    ),
+                  );
+                },
+                child: Text("Add to Cart"),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<Coffeeshop>(builder: (context, value, child) =>SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(25.0),
-        child: Column(
-          children: [
-            // heading message
-            Text("How would you like your coffee?",
-            style: TextStyle(fontSize: 20),
-            ),
-        
-            const SizedBox(height: 25,),
-        
-            //list of coffee to buy
-            Expanded(child: ListView.builder(
-              itemCount: value.coffeeshop.length,
-              itemBuilder: (context, index){
-               //get individual coffee
-               Coffee eachCoffee = value.coffeeshop[index];
-
-            //return the tile for this coffee
-            return CoffeeTile(
-              coffee: eachCoffee,
-              icon: Icon(Icons.add),
-              onPressed:() => addToCart(eachCoffee),);
-  })
-            )
-          ],
+    return Consumer<Coffeeshop>(
+      builder: (context, value, child) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "How would you like your coffee?",
+                style: TextStyle(fontSize: 20),
+              ),
+              const SizedBox(height: 25),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: value.coffeeshop.length,
+                  itemBuilder: (context, index) {
+                    Coffee eachCoffee = value.coffeeshop[index];
+                    return CoffeeTile(
+                      coffee: eachCoffee,
+                      icon: Icon(Icons.add),
+                      onPressed: () => showQuantityDialog(eachCoffee),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    )
     );
-    
   }
 }
